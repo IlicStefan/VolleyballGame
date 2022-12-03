@@ -1,7 +1,10 @@
 #ifndef VOLLEYBALLGAME_APPLICATION_H
 #define VOLLEYBALLGAME_APPLICATION_H
 
+#include "ApplicationState.h"
 #include <SFML/Graphics.hpp>
+#include <memory>
+#include <vector>
 
 class Application {
 public:
@@ -11,16 +14,11 @@ public:
 private:
   void processEvents();
   void update(sf::Time timePerFrame);
-  void display();
-
-  void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+  void render();
 
   sf::RenderWindow mWindow;
-  sf::CircleShape mShape;
-  bool mIsMovingUp;
-  bool mIsMovingDown;
-  bool mIsMovingLeft;
-  bool mIsMovingRight;
+  ApplicationStatus mStatus;
+  std::vector<std::unique_ptr<ApplicationState>> mStates;
 };
 
 #endif // VOLLEYBALLGAME_APPLICATION_H

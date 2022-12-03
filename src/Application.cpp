@@ -1,11 +1,13 @@
 #include "Application.h"
+#include "Game.h"
+#include "MainMenu.h"
+#include "Pause.h"
 
 Application::Application()
-    : mWindow(sf::VideoMode(640, 480), "Volleyball Game"), mShape() {
+    : mWindow(sf::VideoMode(640, 480), "Volleyball Game") {
   mWindow.setVerticalSyncEnabled(true);
-  mShape.setRadius(40.f);
-  mShape.setPosition(100.f, 100.f);
-  mShape.setFillColor(sf::Color::Green);
+  mStatus = ApplicationStatus::MAIN_MENU;
+  mStates.push_back(std::make_unique<MainMenu>());
 }
 
 void Application::run(unsigned minimumFramePerSeconds) {
@@ -23,7 +25,7 @@ void Application::run(unsigned minimumFramePerSeconds) {
     }
     update(timeSinceLastUpdate);
 
-    display();
+    render();
   }
 }
 
@@ -31,52 +33,54 @@ void Application::processEvents() {
   sf::Event event;
 
   while (mWindow.pollEvent(event)) {
-    switch (event.type) {
-    case sf::Event::KeyPressed:
-      handlePlayerInput(event.key.code, true);
-      break;
-    case sf::Event::KeyReleased:
-      handlePlayerInput(event.key.code, false);
-      break;
-    case sf::Event::Closed:
+    if (event.type == sf::Event::Closed) {
       mWindow.close();
-      break;
+    }
+
+    ApplicationStatus status = mStates.back()->processEvents(event);
+
+    if (mStatus == status) {
+      continue;
+    }
+
+    if (mStatus == ApplicationStatus::MAIN_MENU) {
+      if (status == ApplicationStatus::EXIT) {
+        mWindow.close();
+      } else if (status == ApplicationStatus::GAME) {
+        mStates.push_back(std::make_unique<Game>());
+        mStatus = ApplicationStatus::GAME;
+      }
+    } else if (mStatus == ApplicationStatus::GAME) {
+      if (status == ApplicationStatus::PAUSE) {
+        mStates.push_back(std::make_unique<Pause>());
+        mStatus = ApplicationStatus::PAUSE;
+      }
+    } else if (mStatus == ApplicationStatus::PAUSE) {
+      if (status == ApplicationStatus::GAME) {
+        mStates.pop_back(); // pop Pause
+        mStatus = ApplicationStatus::GAME;
+      } else if (status == ApplicationStatus::MAIN_MENU) {
+        mStates.pop_back(); // pop Pause
+        mStates.pop_back(); // pop Game
+        mStatus = ApplicationStatus::MAIN_MENU;
+      }
     }
   }
 }
 
 void Application::update(sf::Time timePerFrame) {
-  sf::Vector2f movement(0.f, 0.f);
-
-  if (mIsMovingUp) {
-    movement.y -= 10.f;
-  }
-  if (mIsMovingDown) {
-    movement.y += 10.f;
-  }
-  if (mIsMovingLeft) {
-    movement.x -= 10.f;
-  }
-  if (mIsMovingRight) {
-    movement.x += 10.f;
-  }
-
-  mShape.move(movement * timePerFrame.asSeconds());
+  mStates.back()->update(timePerFrame);
 }
 
-void Application::display() {
+void Application::render() {
   mWindow.clear();
-  mWindow.draw(mShape);
-  mWindow.display();
-}
 
-void Application::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
-  if (key == sf::Keyboard::W)
-    mIsMovingUp = isPressed;
-  if (key == sf::Keyboard::S)
-    mIsMovingDown = isPressed;
-  if (key == sf::Keyboard::A)
-    mIsMovingLeft = isPressed;
-  if (key == sf::Keyboard::D)
-    mIsMovingRight = isPressed;
+  if (mStatus == ApplicationStatus::PAUSE) {
+    mWindow.draw(*mStates.end()[-2]); // Draw Game
+    mWindow.draw(*mStates.back());    // Draw Pause
+  } else {
+    mWindow.draw(*mStates.back());
+  }
+
+  mWindow.display();
 }
