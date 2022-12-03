@@ -7,6 +7,7 @@ Volleyball game for two players
 
 ## :wrench: Tools
 - C++23
+- CMake
 - SFML
 
 ## :electric_plug: Installation
