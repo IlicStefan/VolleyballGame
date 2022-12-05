@@ -1,8 +1,11 @@
 #include "src/Application.h"
+#include "src/Configuration.h"
 
 int main() {
-  Application app;
-  app.run(60);
+    Configuration::initialize();
 
-  return 0;
+    Application app;
+    app.run(30);
+
+    return 0;
 }

@@ -7,19 +7,21 @@
 
 class Game : public ApplicationState {
 public:
-  Game();
-  virtual ApplicationStatus processEvents(sf::Event event);
-  virtual void update(sf::Time timePerFrame);
+    Game();
+    ApplicationStatus processEvents(sf::Event event) override;
+    void update(sf::Time timePerFrame) override;
 
 private:
-  virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-  void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+    void draw(sf::RenderTarget & target,
+              sf::RenderStates states) const override;
+    void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
-  sf::CircleShape mShape;
-  bool mIsMovingUp;
-  bool mIsMovingDown;
-  bool mIsMovingLeft;
-  bool mIsMovingRight;
+    sf::Sprite mBall;
+    sf::Sprite mBackground;
+    bool mIsMovingUp;
+    bool mIsMovingDown;
+    bool mIsMovingLeft;
+    bool mIsMovingRight;
 };
 
 #endif // VOLLEYBALLGAME_GAME_H

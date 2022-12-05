@@ -7,14 +7,16 @@
 
 class ApplicationState : public sf::Drawable {
 public:
-  virtual ~ApplicationState(){};
+    ApplicationState() = default;
+    ApplicationState(ApplicationState &) = delete;
+    ApplicationState & operator=(const ApplicationState &) = delete;
 
-  virtual ApplicationStatus processEvents(sf::Event event) = 0;
-  virtual void update(sf::Time timePerFrame) = 0;
+    virtual ApplicationStatus processEvents(sf::Event event) = 0;
+    virtual void update(sf::Time timePerFrame) = 0;
 
 private:
-  virtual void draw(sf::RenderTarget &target,
-                    sf::RenderStates states) const = 0;
+    void draw(sf::RenderTarget & target,
+              sf::RenderStates states) const override = 0;
 };
 
 #endif // VOLLEYBALLGAME_APPLICATIONSTATE_H

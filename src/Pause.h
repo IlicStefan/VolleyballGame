@@ -4,21 +4,28 @@
 #include "Application.h"
 #include "ApplicationState.h"
 #include "ApplicationStatus.h"
+#include "Button.h"
 
 class Pause : public ApplicationState {
 public:
-  enum class Button { RESUME_GAME, GO_TO_MAIN_MENU };
+    Pause(const Pause &) = delete;
+    Pause & operator=(const Pause &) = delete;
 
-  Pause();
-  virtual ApplicationStatus processEvents(sf::Event event);
-  virtual void update(sf::Time timePerFrame);
+    enum class FocusedButton { RESUME, EXIT };
+
+    Pause();
+    ApplicationStatus processEvents(sf::Event event) override;
+    void update(sf::Time timePerFrame) override;
 
 private:
-  virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget & target,
+              sf::RenderStates states) const override;
+    void focusResume();
+    void focusExit();
 
-  Button mSelectedButton;
-  sf::RectangleShape mResumeGameButton;
-  sf::RectangleShape mGoToMainMenuButton;
+    FocusedButton mFocusedButton;
+    Button mResumeButton;
+    Button mExitButton;
 };
 
 #endif // VOLLEYBALLGAME_PAUSE_H

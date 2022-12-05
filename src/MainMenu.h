@@ -4,22 +4,27 @@
 #include "Application.h"
 #include "ApplicationState.h"
 #include "ApplicationStatus.h"
+#include "Button.h"
 
 class MainMenu : public ApplicationState {
 public:
-  enum class Button { START_GAME, EXIT };
+    enum class FocusedButton { START, QUIT };
 
-  MainMenu();
+    MainMenu();
 
-  virtual ApplicationStatus processEvents(sf::Event event);
-  virtual void update(sf::Time timePerFrame);
+    ApplicationStatus processEvents(sf::Event event) override;
+    void update(sf::Time timePerFrame) override;
 
 private:
-  virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget & target,
+              sf::RenderStates states) const override;
+    void focusStart();
+    void focusQuit();
 
-  Button mSelectedButton;
-  sf::RectangleShape mStartGameButton;
-  sf::RectangleShape mExitGameButton;
+    sf::Sprite mBackground;
+    FocusedButton mFocusedButton;
+    Button mStartButton;
+    Button mQuitButton;
 };
 
 #endif // VOLLEYBALLGAME_MAINMENU_H

@@ -1,0 +1,8 @@
+#ifndef VOLLEYBALLGAME_SRC_FONTS_H
+#define VOLLEYBALLGAME_SRC_FONTS_H
+
+enum class Fonts {
+    FRUIT_DAYS,
+};
+
+#endif //VOLLEYBALLGAME_SRC_FONTS_H

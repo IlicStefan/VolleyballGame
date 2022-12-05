@@ -1,52 +1,66 @@
 #include "Pause.h"
+#include "Constants.h"
 
-Pause::Pause() : mSelectedButton(Button::RESUME_GAME) {
-  mResumeGameButton.setPosition(250.f, 230.f);
-  mResumeGameButton.setSize({60.f, 20.f});
-  mResumeGameButton.setFillColor(sf::Color::Green);
-
-  mGoToMainMenuButton.setPosition(330.f, 230.f);
-  mGoToMainMenuButton.setSize({60.f, 20.f});
-  mGoToMainMenuButton.setFillColor(sf::Color::Red);
+Pause::Pause()
+    : mResumeButton(
+    {
+        float(Constants::WINDOW_WIDTH) / 2 - Constants::BUTTON_WIDTH / 2,
+        float(Constants::WINDOW_HEIGHT) / 2 - Constants::BUTTON_HEIGHT
+            - Constants::BUTTON_MARGIN / 2
+    },
+    {
+        Constants::BUTTON_WIDTH,
+        Constants::BUTTON_HEIGHT
+    },
+    "RESUME"
+),
+      mExitButton(
+          {
+              float(Constants::WINDOW_WIDTH) / 2 - Constants::BUTTON_WIDTH / 2,
+              float(Constants::WINDOW_HEIGHT) / 2 + Constants::BUTTON_MARGIN / 2
+          },
+          {
+              Constants::BUTTON_WIDTH,
+              Constants::BUTTON_HEIGHT
+          },
+          "EXIT"
+      ) {
+    focusResume();
 }
 
 ApplicationStatus Pause::processEvents(sf::Event event) {
-  if (event.type == sf::Event::KeyPressed) {
-    if (event.key.code == sf::Keyboard::Left) {
-      mSelectedButton = Button::RESUME_GAME;
-    } else if (event.key.code == sf::Keyboard::Right) {
-      mSelectedButton = Button::GO_TO_MAIN_MENU;
-    } else if (event.key.code == sf::Keyboard::Enter) {
-      if (mSelectedButton == Button::RESUME_GAME) {
-        return ApplicationStatus::GAME;
-      } else if (mSelectedButton == Button::GO_TO_MAIN_MENU) {
-        return ApplicationStatus::MAIN_MENU;
-      }
+    if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Up) {
+            focusResume();
+        } else if (event.key.code == sf::Keyboard::Down) {
+            focusExit();
+        } else if (event.key.code == sf::Keyboard::Enter) {
+            if (mFocusedButton == FocusedButton::RESUME) {
+                return ApplicationStatus::GAME;
+            } else if (mFocusedButton == FocusedButton::EXIT) {
+                return ApplicationStatus::MAIN_MENU;
+            }
+        }
     }
-  }
 
-  return ApplicationStatus::PAUSE;
+    return ApplicationStatus::PAUSE;
 }
 
 void Pause::update(sf::Time timePerFrame) {}
 
-void Pause::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-  sf::RectangleShape selectedButtonShadow;
+void Pause::draw(sf::RenderTarget & target, sf::RenderStates states) const {
+    target.draw(mResumeButton, states);
+    target.draw(mExitButton, states);
+}
 
-  if (mSelectedButton == Pause::Button::RESUME_GAME) {
-    selectedButtonShadow = mResumeGameButton;
-  } else {
-    selectedButtonShadow = mGoToMainMenuButton;
-  }
+void Pause::focusResume() {
+    mResumeButton.focus(true);
+    mExitButton.focus(false);
+    mFocusedButton = FocusedButton::RESUME;
+}
 
-  selectedButtonShadow.setPosition(selectedButtonShadow.getPosition().x - 3.f,
-                                   selectedButtonShadow.getPosition().y - 3.f);
-  selectedButtonShadow.setSize({selectedButtonShadow.getSize().x + 6.f,
-                                selectedButtonShadow.getSize().y + 6.f});
-
-  selectedButtonShadow.setFillColor(sf::Color::Yellow);
-
-  target.draw(selectedButtonShadow, states);
-  target.draw(mResumeGameButton, states);
-  target.draw(mGoToMainMenuButton, states);
+void Pause::focusExit() {
+    mResumeButton.focus(false);
+    mExitButton.focus(true);
+    mFocusedButton = FocusedButton::EXIT;
 }
