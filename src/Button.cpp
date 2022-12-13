@@ -6,9 +6,10 @@
 #include <iostream>
 
 Button::Button(const sf::Vector2f & position,
-               const sf::Vector2f size,
+               const sf::Vector2f & size,
                const std::string & text)
-    : mBackground(Configuration::textures.get(Textures::BUTTON)) {
+    : mBackground(Configuration::textures.get(Textures::BUTTON)),
+      mIsFocused(false) {
     setBackgroundPosition(position);
     setBackgroundSize(size);
     initText(text);
@@ -35,8 +36,8 @@ void Button::setBackgroundPosition(const sf::Vector2f & position) {
 
 void Button::setBackgroundSize(const sf::Vector2f & size) {
     mBackground.setScale(
-        size.x / mBackground.getTextureRect().width,
-        size.y / mBackground.getTextureRect().height
+        size.x / float(mBackground.getTextureRect().width),
+        size.y / float(mBackground.getTextureRect().height)
     );
 }
 

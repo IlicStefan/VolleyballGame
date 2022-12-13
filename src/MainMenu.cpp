@@ -5,28 +5,15 @@
 
 MainMenu::MainMenu()
     : mBackground(Configuration::textures.get(Textures::BACKGROUND_MAIN_MENU)),
-      mStartButton(
-          {
-              Constants::BUTTON_MARGIN,
-              Constants::BUTTON_MARGIN
-          },
-          {
-              Constants::BUTTON_WIDTH,
-              Constants::BUTTON_HEIGHT
-          },
-          "START"
-      ),
-      mQuitButton(
-          {
-              Constants::BUTTON_MARGIN,
-              Constants::BUTTON_HEIGHT + 2 * Constants::BUTTON_MARGIN
-          },
-          {
-              Constants::BUTTON_WIDTH,
-              Constants::BUTTON_HEIGHT
-          },
-          "QUIT"
-      ) {
+      mStartButton({Constants::BUTTON_MARGIN, Constants::BUTTON_MARGIN},
+                   {Constants::BUTTON_WIDTH, Constants::BUTTON_HEIGHT},
+                   "START"),
+      mQuitButton({Constants::BUTTON_MARGIN,
+                   Constants::BUTTON_HEIGHT
+                       + 2 * Constants::BUTTON_MARGIN},
+                  {Constants::BUTTON_WIDTH,
+                   Constants::BUTTON_HEIGHT},
+                  "QUIT") {
     mBackground.setScale(
         float(Constants::WINDOW_WIDTH) / mBackground.getGlobalBounds().width,
         float(Constants::WINDOW_HEIGHT) / mBackground.getGlobalBounds().height);

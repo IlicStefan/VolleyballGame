@@ -9,6 +9,15 @@ namespace Constants {
     constexpr float BUTTON_HEIGHT = 200.f;
     constexpr float BUTTON_MARGIN = 60.f;
     constexpr unsigned int BUTTON_TEXT_CHARACTER_SIZE = 100u;
+
+    constexpr float BALL_RADIUS = 100.f;
+
+    constexpr float PLAYER_WIDTH = 100.f;
+    constexpr float PLAYER_HEIGHT = 200.f;
+    constexpr float PLAYER_SPEED = 500.f;
+
+    constexpr float NET_WIDTH = 10.f;
+    constexpr float NET_HEIGHT = 400.f;
 };
 
 #endif // VOLLEYBALLGAME_CONSTANTS_H

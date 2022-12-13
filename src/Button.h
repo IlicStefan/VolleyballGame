@@ -10,7 +10,7 @@ public:
     Button & operator=(const Button &) = delete;
 
     Button(const sf::Vector2f & position,
-           const sf::Vector2f size,
+           const sf::Vector2f & size,
            const std::string & text);
     void focus(bool focused);
 

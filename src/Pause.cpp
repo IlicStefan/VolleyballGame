@@ -1,30 +1,21 @@
 #include "Pause.h"
 #include "Constants.h"
 
-Pause::Pause()
-    : mResumeButton(
-    {
-        float(Constants::WINDOW_WIDTH) / 2 - Constants::BUTTON_WIDTH / 2,
-        float(Constants::WINDOW_HEIGHT) / 2 - Constants::BUTTON_HEIGHT
-            - Constants::BUTTON_MARGIN / 2
-    },
-    {
-        Constants::BUTTON_WIDTH,
-        Constants::BUTTON_HEIGHT
-    },
-    "RESUME"
-),
-      mExitButton(
-          {
-              float(Constants::WINDOW_WIDTH) / 2 - Constants::BUTTON_WIDTH / 2,
-              float(Constants::WINDOW_HEIGHT) / 2 + Constants::BUTTON_MARGIN / 2
-          },
-          {
-              Constants::BUTTON_WIDTH,
-              Constants::BUTTON_HEIGHT
-          },
-          "EXIT"
-      ) {
+Pause::Pause() : mResumeButton({float(Constants::WINDOW_WIDTH) / 2
+                                    - Constants::BUTTON_WIDTH / 2,
+                                float(Constants::WINDOW_HEIGHT) / 2
+                                    - Constants::BUTTON_HEIGHT
+                                    - Constants::BUTTON_MARGIN / 2},
+                               {Constants::BUTTON_WIDTH,
+                                Constants::BUTTON_HEIGHT},
+                               "RESUME"),
+                 mExitButton({float(Constants::WINDOW_WIDTH) / 2
+                                  - Constants::BUTTON_WIDTH / 2,
+                              float(Constants::WINDOW_HEIGHT) / 2
+                                  + Constants::BUTTON_MARGIN / 2},
+                             {Constants::BUTTON_WIDTH,
+                              Constants::BUTTON_HEIGHT},
+                             "EXIT") {
     focusResume();
 }
 
