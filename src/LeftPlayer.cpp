@@ -5,23 +5,13 @@ LeftPlayer::LeftPlayer() {
     mPlayer.setPosition(Constants::PLAYER_STARTING_POSITION_FROM_FRAME,
                         Constants::WINDOW_HEIGHT - Constants::PLAYER_HEIGHT);
     mPlayer.setSize({Constants::PLAYER_WIDTH, Constants::PLAYER_HEIGHT});
-    mPlayer.setFillColor(sf::Color::Cyan);
+    mPlayer.setFillColor(sf::Color::Blue);
 }
 
 void LeftPlayer::update(sf::Time timePerFrame) {
-    sf::Vector2f movement(0.f, 0.f);
-
-    if (mIsMovingUp) {
-        movement.y -= 1.f;
-    }
-    if (mIsMovingLeft) {
-        movement.x -= 1.f;
-    }
-    if (mIsMovingRight) {
-        movement.x += 1.f;
-    }
-
-    mPlayer.move(movement * timePerFrame.asSeconds() * Constants::PLAYER_SPEED);
+    Player::update(timePerFrame);
+    AlignLeftIfNecessary();
+    AlignRightIfNecessary();
 }
 
 void LeftPlayer::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
@@ -31,5 +21,23 @@ void LeftPlayer::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
         mIsMovingLeft = isPressed;
     } else if (key == sf::Keyboard::D) {
         mIsMovingRight = isPressed;
+    }
+}
+
+void LeftPlayer::AlignLeftIfNecessary() {
+    constexpr float border = 0.f;
+
+    if (mPlayer.getPosition().x < border) {
+        mPlayer.setPosition(border, mPlayer.getPosition().y);
+    }
+}
+
+void LeftPlayer::AlignRightIfNecessary() {
+    constexpr float border =
+        (Constants::WINDOW_WIDTH - Constants::NET_WIDTH) / 2.f
+            - Constants::PLAYER_WIDTH;
+
+    if (border < mPlayer.getPosition().x) {
+        mPlayer.setPosition(border, mPlayer.getPosition().y);
     }
 }

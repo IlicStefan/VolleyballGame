@@ -9,9 +9,9 @@ public:
     Player(const Player &) = delete;
     Player & operator=(const Player &) = delete;
 
-    Player();
-
 protected:
+    Player();
+    void update(sf::Time timePerFrame);
     bool mIsMovingUp;
     bool mIsMovingLeft;
     bool mIsMovingRight;

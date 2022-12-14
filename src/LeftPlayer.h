@@ -12,6 +12,10 @@ public:
 
     void update(sf::Time timePerFrame);
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+
+private:
+    void AlignLeftIfNecessary();
+    void AlignRightIfNecessary();
 };
 
 #endif //VOLLEYBALLGAME_SRC_LEFTPLAYER_H
