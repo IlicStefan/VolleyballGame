@@ -6,7 +6,8 @@
 #include "ApplicationStatus.h"
 #include "Ball.h"
 #include "Net.h"
-#include "Player.h"
+#include "LeftPlayer.h"
+#include "RightPlayer.h"
 
 class Game : public ApplicationState {
 public:
@@ -19,7 +20,8 @@ private:
               sf::RenderStates states) const override;
 
     Net mNet;
-    Player mPlayer;
+    LeftPlayer mLeftPlayer;
+    RightPlayer mRightPlayer;
     Ball mBall;
     sf::Sprite mBackground;
 };
