@@ -12,12 +12,16 @@ public:
 protected:
     Player();
     void update(sf::Time timePerFrame);
+
     bool mIsMovingUp;
     bool mIsMovingLeft;
     bool mIsMovingRight;
     sf::RectangleShape mPlayer;
+    float mJumpVelocity;
+    bool mOnGround;
 
 private:
+    void alignDownIfNecessary();
     void draw(sf::RenderTarget & target,
               sf::RenderStates states) const override;
 };

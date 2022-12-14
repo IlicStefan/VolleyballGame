@@ -11,8 +11,8 @@ RightPlayer::RightPlayer() {
 
 void RightPlayer::update(sf::Time timePerFrame) {
     Player::update(timePerFrame);
-    AlignLeftIfNecessary();
-    AlignRightIfNecessary();
+    alignLeftIfNecessary();
+    alignRightIfNecessary();
 }
 
 void RightPlayer::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
@@ -25,7 +25,7 @@ void RightPlayer::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
     }
 }
 
-void RightPlayer::AlignLeftIfNecessary() {
+void RightPlayer::alignLeftIfNecessary() {
     constexpr float
         border = (Constants::WINDOW_WIDTH + Constants::NET_WIDTH) / 2.f;
 
@@ -34,7 +34,7 @@ void RightPlayer::AlignLeftIfNecessary() {
     }
 }
 
-void RightPlayer::AlignRightIfNecessary() {
+void RightPlayer::alignRightIfNecessary() {
     constexpr float border = Constants::WINDOW_WIDTH - Constants::PLAYER_WIDTH;
 
     if (border < mPlayer.getPosition().x) {

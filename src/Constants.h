@@ -15,7 +15,9 @@ namespace Constants {
     constexpr float PLAYER_WIDTH = 100.f;
     constexpr float PLAYER_HEIGHT = 200.f;
     constexpr float PLAYER_STARTING_POSITION_FROM_FRAME = 100.f;
-    constexpr float PLAYER_SPEED = 500.f;
+    constexpr float PLAYER_SPEED = 300.f;
+    constexpr float PLAYER_GRAVITY = 1.f;
+    constexpr float PLAYER_JUMP_VELOCITY = -1.f;
 
     constexpr float NET_WIDTH = 10.f;
     constexpr float NET_HEIGHT = 400.f;

@@ -14,8 +14,8 @@ public:
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
 private:
-    void AlignLeftIfNecessary();
-    void AlignRightIfNecessary();
+    void alignLeftIfNecessary();
+    void alignRightIfNecessary();
 };
 
 #endif //VOLLEYBALLGAME_SRC_RIGHTPLAYER_H
