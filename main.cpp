@@ -5,7 +5,7 @@ int main() {
     Configuration::initialize();
 
     Application app;
-    app.run(30);
+    app.run(60);
 
     return 0;
 }

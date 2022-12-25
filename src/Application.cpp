@@ -11,7 +11,7 @@ Application::Application()
         Constants::WINDOW_HEIGHT),
     "Volleyball Game") {
     mWindow.setVerticalSyncEnabled(true);
-    mWindow.setFramerateLimit(30);
+    mWindow.setFramerateLimit(60);
     mStatus = ApplicationStatus::MAIN_MENU;
     mStates.push_back(std::make_unique<MainMenu>());
 }

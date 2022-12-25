@@ -5,6 +5,14 @@ Player::Player()
     : mIsMovingUp(false), mIsMovingLeft(false),
       mIsMovingRight(false), mJumpVelocity(0.f), mOnGround(true) {}
 
+sf::CircleShape Player::getHead() const {
+    sf::CircleShape result;
+    result.setRadius(Constants::PLAYER_WIDTH);
+    result.setPosition(mPlayer.getPosition());
+
+    return result;
+}
+
 void Player::update(sf::Time timePerFrame) {
     sf::Vector2f movement(0.f, mJumpVelocity);
 
@@ -19,7 +27,7 @@ void Player::update(sf::Time timePerFrame) {
         movement.x += 1.f;
     }
 
-    mPlayer.move(movement * timePerFrame.asSeconds() * Constants::PLAYER_SPEED);
+    mPlayer.move(movement * timePerFrame.asSeconds() * Constants::GAME_SPEED);
     alignDownIfNecessary();
     mJumpVelocity += Constants::PLAYER_GRAVITY * timePerFrame.asSeconds();
 }

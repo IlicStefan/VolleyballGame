@@ -9,7 +9,7 @@ public:
     Net & operator=(const Net &) = delete;
 
     Net();
-
+    sf::RectangleShape getShape() const;
 private:
     void draw(sf::RenderTarget & target,
               sf::RenderStates states) const override;

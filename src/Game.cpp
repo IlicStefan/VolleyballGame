@@ -1,7 +1,14 @@
 #include "Game.h"
+#include "Configuration.h"
+#include "Constants.h"
 
 Game::Game()
-    : mNet(), mLeftPlayer(), mRightPlayer(), mBall() {}
+    : mBackground(Configuration::textures.get(Textures::BACKGROUND_GAME)),
+      mNet(), mLeftPlayer(), mRightPlayer(), mBall() {
+    mBackground.setScale(
+        float(Constants::WINDOW_WIDTH) / mBackground.getGlobalBounds().width,
+        float(Constants::WINDOW_HEIGHT) / mBackground.getGlobalBounds().height);
+}
 
 ApplicationStatus Game::processEvents(sf::Event event) {
     if (event.type == sf::Event::KeyPressed) {
@@ -21,6 +28,7 @@ ApplicationStatus Game::processEvents(sf::Event event) {
 void Game::update(sf::Time timePerFrame) {
     mLeftPlayer.update(timePerFrame);
     mRightPlayer.update(timePerFrame);
+    mBall.update(timePerFrame, mLeftPlayer, mRightPlayer, mNet);
 }
 
 void Game::draw(sf::RenderTarget & target, sf::RenderStates states) const {

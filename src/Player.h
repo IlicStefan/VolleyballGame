@@ -9,6 +9,7 @@ public:
     Player(const Player &) = delete;
     Player & operator=(const Player &) = delete;
 
+    sf::CircleShape getHead() const;
 protected:
     Player();
     void update(sf::Time timePerFrame);
